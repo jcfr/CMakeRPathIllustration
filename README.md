@@ -22,6 +22,7 @@ ROOT_DIR=$(pwd) && \
 mkdir CMakeRPathIllustration-${EXPERIMENT}-build && cd $_ && \
 CMAKE_INSTALL_PREFIX=${ROOT_DIR}/CMakeRPathIllustration-${EXPERIMENT}-install && \
 ${CMAKE} \
+  -DCMAKE_BUILD_TYPE:STRING=Release \
   -DCMAKE_INSTALL_PREFIX:PATH=${CMAKE_INSTALL_PREFIX} \
   ../CMakeRPathIllustration && \
 \
@@ -29,9 +30,13 @@ make install && \
 \
 echo "build tree" && \
 otool -L lib/MyWorld/libMyWorld.dylib && \
+cat cmake/CMakeRPathIllustrationTargets.cmake | grep IMPORTED_LOCATION_RELEASE && \
+cat cmake/CMakeRPathIllustrationTargets.cmake | grep IMPORTED_SONAME_RELEASE && \
 \
 echo "install tree" && \
-otool -L ../CMakeRPathIllustration-${EXPERIMENT}-install/lib/MyWorld/libMyWorld.dylib)
+otool -L ../CMakeRPathIllustration-${EXPERIMENT}-install/lib/MyWorld/libMyWorld.dylib && \
+cat ../CMakeRPathIllustration-${EXPERIMENT}-install/cmake/CMakeRPathIllustrationTargets-release.cmake | grep IMPORTED_LOCATION_RELEASE && \
+cat ../CMakeRPathIllustration-${EXPERIMENT}-install/cmake/CMakeRPathIllustrationTargets-release.cmake | grep IMPORTED_SONAME_RELEASE)
 ```
 
 ```bash
@@ -40,11 +45,15 @@ lib/MyWorld/libMyWorld.dylib:
 	@rpath/libMyWorld.dylib (compatibility version 0.0.0, current version 0.0.0)
 	/usr/lib/libc++.1.dylib (compatibility version 1.0.0, current version 902.1.0)
 	/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1281.100.1)
+  IMPORTED_LOCATION_RELEASE "/tmp/CMakeRPathIllustration-default-build/lib/MyWorld/libMyWorld.dylib"
+  IMPORTED_SONAME_RELEASE "@rpath/libMyWorld.dylib"
 install tree
 ../CMakeRPathIllustration-default-install/lib/MyWorld/libMyWorld.dylib:
 	@rpath/libMyWorld.dylib (compatibility version 0.0.0, current version 0.0.0)
 	/usr/lib/libc++.1.dylib (compatibility version 1.0.0, current version 902.1.0)
 	/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1281.100.1)
+  IMPORTED_LOCATION_RELEASE "${_IMPORT_PREFIX}/lib/MyWorld/libMyWorld.dylib"
+  IMPORTED_SONAME_RELEASE "@rpath/libMyWorld.dylib"
 ```
 
 ## CMAKE_INSTALL_NAME_DIR set to value of CMAKE_INSTALL_PREFIX
@@ -58,6 +67,7 @@ ROOT_DIR=$(pwd) && \
 mkdir CMakeRPathIllustration-${EXPERIMENT}-build && cd $_ && \
 CMAKE_INSTALL_PREFIX=${ROOT_DIR}/CMakeRPathIllustration-${EXPERIMENT}-install && \
 ${CMAKE} \
+  -DCMAKE_BUILD_TYPE:STRING=Release \
   -DCMAKE_INSTALL_PREFIX:PATH=${CMAKE_INSTALL_PREFIX} \
   -DCMAKE_INSTALL_NAME_DIR:PATH=${CMAKE_INSTALL_PREFIX} \
   ../CMakeRPathIllustration && \
@@ -66,9 +76,13 @@ make install && \
 \
 echo "build tree" && \
 otool -L lib/MyWorld/libMyWorld.dylib && \
+cat cmake/CMakeRPathIllustrationTargets.cmake | grep IMPORTED_LOCATION_RELEASE && \
+cat cmake/CMakeRPathIllustrationTargets.cmake | grep IMPORTED_SONAME_RELEASE && \
 \
 echo "install tree" && \
-otool -L ../CMakeRPathIllustration-${EXPERIMENT}-install/lib/MyWorld/libMyWorld.dylib)
+otool -L ../CMakeRPathIllustration-${EXPERIMENT}-install/lib/MyWorld/libMyWorld.dylib && \
+cat ../CMakeRPathIllustration-${EXPERIMENT}-install/cmake/CMakeRPathIllustrationTargets-release.cmake | grep IMPORTED_LOCATION_RELEASE && \
+cat ../CMakeRPathIllustration-${EXPERIMENT}-install/cmake/CMakeRPathIllustrationTargets-release.cmake | grep IMPORTED_SONAME_RELEASE)
 ```
 
 ```bash
@@ -77,11 +91,15 @@ lib/MyWorld/libMyWorld.dylib:
 	@rpath/libMyWorld.dylib (compatibility version 0.0.0, current version 0.0.0)
 	/usr/lib/libc++.1.dylib (compatibility version 1.0.0, current version 902.1.0)
 	/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1281.100.1)
+  IMPORTED_LOCATION_RELEASE "/tmp/CMakeRPathIllustration-experiment1-build/lib/MyWorld/libMyWorld.dylib"
+  IMPORTED_SONAME_RELEASE "@rpath/libMyWorld.dylib"
 install tree
 ../CMakeRPathIllustration-experiment1-install/lib/MyWorld/libMyWorld.dylib:
 	/tmp/CMakeRPathIllustration-experiment1-install/libMyWorld.dylib (compatibility version 0.0.0, current version 0.0.0)
 	/usr/lib/libc++.1.dylib (compatibility version 1.0.0, current version 902.1.0)
 	/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1281.100.1)
+  IMPORTED_LOCATION_RELEASE "${_IMPORT_PREFIX}/lib/MyWorld/libMyWorld.dylib"
+  IMPORTED_SONAME_RELEASE "/tmp/CMakeRPathIllustration-experiment1-install/libMyWorld.dylib"
 ```
 
 ## CMAKE_INSTALL_NAME_DIR set to value of CMAKE_INSTALL_PREFIX, CMAKE_MACOSX_RPATH set to OFF
@@ -95,6 +113,7 @@ ROOT_DIR=$(pwd) && \
 mkdir CMakeRPathIllustration-${EXPERIMENT}-build && cd $_ && \
 CMAKE_INSTALL_PREFIX=${ROOT_DIR}/CMakeRPathIllustration-${EXPERIMENT}-install && \
 ${CMAKE} \
+  -DCMAKE_BUILD_TYPE:STRING=Release \
   -DCMAKE_INSTALL_PREFIX:PATH=${CMAKE_INSTALL_PREFIX} \
   -DCMAKE_INSTALL_NAME_DIR:PATH=${CMAKE_INSTALL_PREFIX} \
   -DCMAKE_MACOSX_RPATH:BOOL=OFF \
@@ -104,9 +123,13 @@ make install && \
 \
 echo "build tree" && \
 otool -L lib/MyWorld/libMyWorld.dylib && \
+cat cmake/CMakeRPathIllustrationTargets.cmake | grep IMPORTED_LOCATION_RELEASE && \
+cat cmake/CMakeRPathIllustrationTargets.cmake | grep IMPORTED_SONAME_RELEASE && \
 \
 echo "install tree" && \
-otool -L ../CMakeRPathIllustration-${EXPERIMENT}-install/lib/MyWorld/libMyWorld.dylib)
+otool -L ../CMakeRPathIllustration-${EXPERIMENT}-install/lib/MyWorld/libMyWorld.dylib && \
+cat ../CMakeRPathIllustration-${EXPERIMENT}-install/cmake/CMakeRPathIllustrationTargets-release.cmake | grep IMPORTED_LOCATION_RELEASE && \
+cat ../CMakeRPathIllustration-${EXPERIMENT}-install/cmake/CMakeRPathIllustrationTargets-release.cmake | grep IMPORTED_SONAME_RELEASE)
 ```
 
 ```bash
@@ -115,11 +138,15 @@ lib/MyWorld/libMyWorld.dylib:
 	/tmp/CMakeRPathIllustration-experiment2-build/lib/MyWorld/libMyWorld.dylib (compatibility version 0.0.0, current version 0.0.0)
 	/usr/lib/libc++.1.dylib (compatibility version 1.0.0, current version 902.1.0)
 	/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1281.100.1)
+  IMPORTED_LOCATION_RELEASE "/tmp/CMakeRPathIllustration-experiment2-build/lib/MyWorld/libMyWorld.dylib"
+  IMPORTED_SONAME_RELEASE "/tmp/CMakeRPathIllustration-experiment2-build/lib/MyWorld/libMyWorld.dylib"
 install tree
 ../CMakeRPathIllustration-experiment2-install/lib/MyWorld/libMyWorld.dylib:
 	/tmp/CMakeRPathIllustration-experiment2-install/libMyWorld.dylib (compatibility version 0.0.0, current version 0.0.0)
 	/usr/lib/libc++.1.dylib (compatibility version 1.0.0, current version 902.1.0)
 	/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1281.100.1)
+  IMPORTED_LOCATION_RELEASE "${_IMPORT_PREFIX}/lib/MyWorld/libMyWorld.dylib"
+  IMPORTED_SONAME_RELEASE "/tmp/CMakeRPathIllustration-experiment2-install/libMyWorld.dylib"
 ```
 
 ## License
