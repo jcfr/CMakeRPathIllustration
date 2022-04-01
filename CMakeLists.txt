@@ -3,10 +3,21 @@ cmake_minimum_required(VERSION 3.0.2)
 
 project(CMakeRPathIllustration)
 
-set(MY_CMAKE_DIR "cmake")
-set(MY_BIN_DIR "bin")
-set(MY_LIB_DIR "lib/MyWorld")
-set(MY_INCLUDE_DIR "include/${PROJECT_NAME}")
+if(NOT DEFINED MY_CMAKE_DIR)
+  set(MY_CMAKE_DIR "cmake")
+endif()
+
+if(NOT DEFINED MY_BIN_DIR)
+  set(MY_BIN_DIR "bin")
+endif()
+
+if(NOT DEFINED MY_LIB_DIR)
+  set(MY_LIB_DIR "lib/MyWorld")
+endif()
+
+if(NOT DEFINED MY_INCLUDE_DIR)
+  set(MY_INCLUDE_DIR "include/${PROJECT_NAME}")
+endif()
 
 add_library(MyWorld SHARED MyWorld.cpp MyWorld.h)
 
