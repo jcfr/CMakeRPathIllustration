@@ -3,7 +3,7 @@ CMakeRPathIllustration
 
 Small project illustrating how RPath features can be used within CMake
 
-## Experiments
+## Experiments: Disable use of @rpath and have built & installed libraries with absolute RPATH
 
 All experiments expect the variable `CMAKE` to be set:
 
@@ -56,6 +56,13 @@ install tree
   IMPORTED_SONAME_RELEASE "@rpath/libMyWorld.dylib"
 ```
 
+**Observations:**
+
+| context | remarks |
+|--|--|
+| build tree | :warning: `IMPORTED_SONAME_RELEASE` includes `@rpath` |
+| install tree | :warning: `IMPORTED_SONAME_RELEASE` includes `@rpath` |
+
 ## CMAKE_INSTALL_NAME_DIR set to value of CMAKE_INSTALL_PREFIX
 
 ```bash
@@ -101,6 +108,13 @@ install tree
   IMPORTED_LOCATION_RELEASE "${_IMPORT_PREFIX}/lib/MyWorld/libMyWorld.dylib"
   IMPORTED_SONAME_RELEASE "/tmp/CMakeRPathIllustration-experiment1-install/libMyWorld.dylib"
 ```
+
+**Observations:**
+
+| context | remarks |
+|--|--|
+| build tree | :warning: `IMPORTED_SONAME_RELEASE` includes `@rpath` |
+| install tree | :x: In the case of the install tree, `IMPORTED_LOCATION_RELEASE` and `IMPORTED_SONAME_RELEASE` are expected to be the same. |
 
 ## CMAKE_INSTALL_NAME_DIR set to value of CMAKE_INSTALL_PREFIX, CMAKE_MACOSX_RPATH set to OFF
 
@@ -148,6 +162,13 @@ install tree
   IMPORTED_LOCATION_RELEASE "${_IMPORT_PREFIX}/lib/MyWorld/libMyWorld.dylib"
   IMPORTED_SONAME_RELEASE "/tmp/CMakeRPathIllustration-experiment2-install/libMyWorld.dylib"
 ```
+
+**Observations:**
+
+| context | remarks |
+|--|--|
+| build tree | :heavy_check_mark: Path reported by `otool`, `IMPORTED_SONAME_RELEASE` and `IMPORTED_SONAME_RELEASE` are the same |
+| install tree | :x: In the case of the install tree, `IMPORTED_LOCATION_RELEASE` and `IMPORTED_SONAME_RELEASE` are expected to be the same. |
 
 ## License
 
